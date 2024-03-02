@@ -53,7 +53,7 @@ fn main() {
 
     let mountain_len = mountain.len();
     let mut rng = thread_rng();
-    let random_number = rng.gen_range(0..=mountain_len);
+    let random_number = rng.gen_range(1..=mountain_len);
 
-    println!("{}", mountain[random_number]);
+    println!("{}", mountain[random_number-1]);
 }
