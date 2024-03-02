@@ -35,13 +35,13 @@ fn main() {
         String::from("9p"),
     ];
     let j = vec![
-        String::from("t"),
-        String::from("n"),
-        String::from("s"),
-        String::from("p"),
+        String::from("to"),
+        String::from("na"),
+        String::from("sy"),
+        String::from("pe"),
         String::from("hk"),
         String::from("ht"),
-        String::from("tyu"),
+        String::from("ty"),
     ];
     let mut mountain = Vec::new();
     for _ in 0..4 {
@@ -55,10 +55,37 @@ fn main() {
     for _ in 0..13 {
         let mountain_len = mountain.len();
         let mut rng = thread_rng();
-        let rand_idx = rng.gen_range(1..=mountain_len);
+        let rand_idx = rng.gen_range(0..=mountain_len-1);
         let random_pai = mountain.remove(rand_idx);
         haipai.push(random_pai);
     }
+    haipai.sort_by(|a, b| {
+        let a_starts_with_digit = a.chars().next().unwrap().is_numeric();
+        let b_starts_with_digit = b.chars().next().unwrap().is_numeric();
+
+        // 一文字目が数字のものを優先する
+        if a_starts_with_digit && !b_starts_with_digit {
+            std::cmp::Ordering::Less
+        } else if !a_starts_with_digit && b_starts_with_digit {
+            std::cmp::Ordering::Greater
+        } else {
+            // 数字がついている文字列は二文字をソートする
+            if a_starts_with_digit && b_starts_with_digit {
+                // 二文字目を優先して比較し、同じ場合は一文字目で比較する
+                let a_second_char = a.chars().nth(1).unwrap();
+                let b_second_char = b.chars().nth(1).unwrap();
+                let cmp_second_char = a_second_char.cmp(&b_second_char);
+                if cmp_second_char != std::cmp::Ordering::Equal {
+                    cmp_second_char
+                } else {
+                    a.chars().next().unwrap().cmp(&b.chars().next().unwrap())
+                }
+            } else {
+                // どちらも数字またはどちらも数字でない場合は通常の比較を行う
+                a.cmp(b)
+            }
+        }
+    });
 
     println!("{:?}", haipai);
 }
