@@ -51,9 +51,14 @@ fn main() {
         mountain.extend(j.iter().cloned());
     }
 
-    let mountain_len = mountain.len();
-    let mut rng = thread_rng();
-    let random_number = rng.gen_range(1..=mountain_len);
+    let mut haipai = Vec::new();
+    for _ in 0..13 {
+        let mountain_len = mountain.len();
+        let mut rng = thread_rng();
+        let rand_idx = rng.gen_range(1..=mountain_len);
+        let random_pai = mountain.remove(rand_idx);
+        haipai.push(random_pai);
+    }
 
-    println!("{}", mountain[random_number-1]);
+    println!("{:?}", haipai);
 }
