@@ -1,0 +1,27 @@
+name: AWS Deploy
+on:
+  push:
+    branches:
+      - main
+
+env:
+  AWS_ROLE_ARN: arn:aws:iam::586596014160:role/slack-bot-oidc-role
+
+permissions:
+  id-token: write
+  contents: read
+jobs:
+  aws-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: aws-actions/configure-aws-credentials@master
+        with:
+          role-to-assume: ${{ env.AWS_ROLE_ARN }}
+          aws-region: ap-northeast-1
+      - uses: actions/setup-python@v1
+        with:
+          python-version: 3.9
+      - run: zip -r package.zip ./movie.py
+      - run: pip install awscli
+      - run: aws lambda update-function-code --function-name execute-movie-bot-function --zip-file fileb://package.zip --publish
