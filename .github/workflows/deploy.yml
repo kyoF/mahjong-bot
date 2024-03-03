@@ -2,7 +2,7 @@ name: AWS Deploy
 on:
   push:
     branches:
-      - main
+      - main-test
 
 env:
   AWS_ROLE_ARN: arn:aws:iam::586596014160:role/slack-bot-oidc-role
@@ -22,6 +22,6 @@ jobs:
       - uses: actions/setup-python@v1
         with:
           python-version: 3.9
-      - run: zip -r package.zip ./movie.py
+      - run: zip -r package.zip ./python/main.py
       - run: pip install awscli
-      - run: aws lambda update-function-code --function-name execute-movie-bot-function --zip-file fileb://package.zip --publish
+      - run: aws lambda update-function-code --function-name execute-mahjong-bot-function --zip-file fileb://package.zip --publish
