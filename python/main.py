@@ -16,6 +16,10 @@ def main():
          ':mahjong-haku:', ':mahjong-hatsu:', ':mahjong-chun:']
     mountain = s * 4 + m * 4 + p * 4 + j * 4
 
+    dora = random.sample(mountain, 1)
+    for pai in dora:
+        mountain.remove(pai)
+
     haipai = random.sample(mountain, 12)
     for pai in haipai:
         mountain.remove(pai)
@@ -26,7 +30,7 @@ def main():
     tsumo = str(random.sample(mountain, 1)[0])
 
     slack_client.notify(
-        text=f"今日の配牌:mahjong:\n{''.join(haipai)} :raised_hand:{tsumo}",
+        text=f"【今日の配牌】 ドラ{str(dora[0])}\n{''.join(haipai)} :raised_hand:{tsumo}"
     )
 
 
