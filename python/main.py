@@ -20,7 +20,7 @@ def main():
     for pai in dora:
         mountain.remove(pai)
 
-    haipai = random.sample(mountain, 12)
+    haipai = random.sample(mountain, 13)
     for pai in haipai:
         mountain.remove(pai)
     haipai.sort(
