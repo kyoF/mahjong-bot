@@ -4,7 +4,7 @@ import random
 import os
 
 
-def main():
+def main(response, context):
     load_dotenv()
     incoming_webhook_url = os.getenv('INCOMING_WEBHOOK_URL')
     slack_client = slackweb.Slack(incoming_webhook_url)
@@ -35,4 +35,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    main('', '')
